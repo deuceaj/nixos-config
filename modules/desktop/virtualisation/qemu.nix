@@ -6,8 +6,8 @@
 
 {                                             # Add libvirtd and kvm to userGroups
   boot.extraModprobeConfig = ''
-    options kvm_intel nested=1
-    options kvm_intel emulate_invalid_guest_state=0
+    options kvm_amd nested=1
+    options kvm_amd emulate_invalid_guest_state=0
     options kvm ignore_nsrs=1
   '';                                         # Needed to run OSX-KVM 
 
@@ -195,8 +195,8 @@
 #    virtualisation.libvirtd.enable = true;
 #    users.extraUsers.<user>.extraGroups = [ "libvirtd" ];
 #    boot.extraModprobeConfig = ''
-#      options kvm_intel nested=1
-#      options kvm_intel emulate_invalid_guest_state=0
+#      options kvm_amd nested=1
+#      options kvm_amd emulate_invalid_guest_state=0
 #      options kvm ignore_msrs=1
 #    '';
 # 5. Run the shell: $ nix-shell
