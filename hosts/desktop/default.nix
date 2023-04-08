@@ -28,17 +28,23 @@
     (import ../../modules/desktop/virtualisation) ++      # Virtual Machines & VNC
     (import ../../modules/hardware);                      # Hardware devices
 
-  boot = {                                      # Boot options
+  boot = {                                  # Boot options
     kernelPackages = pkgs.linuxPackages_latest;
-    #initrd.kernelModules = [ "amdgpu" ];       # Video drivers
 
-    loader = {                                  # For legacy boot:
-      systemd-boot = {
-        enable = true;
-        configurationLimit = 5;                 # Limit the amount of configurations
+    loader = {                              # EFI Boot
+      efi = {
+        canTouchEfiVariables = true;
+        efiSysMountPoint = "/boot";
       };
-      efi.canTouchEfiVariables = true;
-      timeout = 1;                              # Grub auto select time
+      grub = {                              # Most of grub is set up for dual boot
+        enable = true;
+        version = 2;
+        devices = [ "nodev" ];
+        efiSupport = true;
+        useOSProber = true;                 # Find all boot options
+        configurationLimit = 2;
+      };
+      timeout = 1;                          # Grub auto select time
     };
   };
 
@@ -51,6 +57,7 @@
       enable = true;
       extraPackages = with pkgs; [
        #intel-media-driver
+        amdvlk
         vaapiIntel
         vaapiVdpau
         libvdpau-va-gl

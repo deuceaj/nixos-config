@@ -16,11 +16,12 @@
 {
   imports =
     [ (modulesPath + "/installer/scan/not-detected.nix")
+      (modulesPath + "/profiles/qemu-guest.nix")
     ];
 
-  boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "nvme" "usb_storage" "usbhid" "uas" "sd_mod" ];
+  boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "nvme" "usb_storage" "usbhid" "uas" "sd_mod" "virtio_pci" "sr_mod" "virtio_blk"];
   boot.initrd.kernelModules = [ ];
-  boot.kernelModules = [ "kvm-intel"];
+  boot.kernelModules = [ "kvm-amd"];
   boot.extraModulePackages = with config.boot.kernelPackages; [ ];
 
   fileSystems."/" =
@@ -42,65 +43,65 @@
   #    options = [ "nofail" ];
   #  };
 
-  fileSystems."/hdd" =
-    { #device = "/dev/disk/by-uuid/bbab0f8a-50f4-4a7c-a0d3-0ccb036f11d5";
-      device = "/dev/disk/by-label/hdd";
-      fsType = "ext4";
-      options = [ "nofail" ];
-    };
+  # fileSystems."/hdd" =
+  #   { #device = "/dev/disk/by-uuid/bbab0f8a-50f4-4a7c-a0d3-0ccb036f11d5";
+  #     device = "/dev/disk/by-label/hdd";
+  #     fsType = "ext4";
+  #     options = [ "nofail" ];
+  #   };
 
-  fileSystems."/mnt/toshiba1" =
-    { #device = "/dev/disk/by-uuid/7491ea96-a62d-4202-ada7-8d0310dfc967";
-      device = "/dev/disk/by-label/toshiba";
-      fsType = "ext4";
-      options = [ "nofail" ];
-    };
+  # fileSystems."/mnt/toshiba1" =
+  #   { #device = "/dev/disk/by-uuid/7491ea96-a62d-4202-ada7-8d0310dfc967";
+  #     device = "/dev/disk/by-label/toshiba";
+  #     fsType = "ext4";
+  #     options = [ "nofail" ];
+  #   };
 
-  fileSystems."/mnt/toshiba2" =
-    { #device = "/dev/disk/by-uuid/21307718-de74-4a24-aaa7-dd09f7e89e32";
-      device = "/dev/disk/by-label/toshiba2";
-      fsType = "ext4";
-      options = [ "nofail" ];
-    };
+  # fileSystems."/mnt/toshiba2" =
+  #   { #device = "/dev/disk/by-uuid/21307718-de74-4a24-aaa7-dd09f7e89e32";
+  #     device = "/dev/disk/by-label/toshiba2";
+  #     fsType = "ext4";
+  #     options = [ "nofail" ];
+  #   };
 
-  fileSystems."/mnt/toshiba3" =
-    { #device = "/dev/disk/by-uuid/7f5e9ea1-2bc3-44c5-9b6a-d8fe2a311b73"; 
-      device = "/dev/disk/by-label/toshiba3";
-      fsType = "ext4";
-      options = [ "nofail" ];
-    };
+  # fileSystems."/mnt/toshiba3" =
+  #   { #device = "/dev/disk/by-uuid/7f5e9ea1-2bc3-44c5-9b6a-d8fe2a311b73"; 
+  #     device = "/dev/disk/by-label/toshiba3";
+  #     fsType = "ext4";
+  #     options = [ "nofail" ];
+  #   };
 
-  fileSystems."/mnt/maxtor" =
-    { #device = "/dev/disk/by-uuid/36E6613DE660FE8D";
-      device = "/dev/disk/by-label/maxtor";
-      fsType = "ntfs";
-      options = [ "nofail" ];
-    };
+  # fileSystems."/mnt/maxtor" =
+  #   { #device = "/dev/disk/by-uuid/36E6613DE660FE8D";
+  #     device = "/dev/disk/by-label/maxtor";
+  #     fsType = "ntfs";
+  #     options = [ "nofail" ];
+  #   };
 
-  fileSystems."/storage" =
-    { #truenas smb storage
-      device = "//192.168.0.3/storage";
-      fsType = "cifs";
-      options = let
-        automount_opts = "x-systemd.automount,noauto,x-systemd.idle-timeout=60,x-systemd.device-timeout=5s,x-systemd.mount-timeout=5s";
-      in ["${automount_opts},mfsymlinks,uid=1000,gid=100,credentials=/home/matthias/smb"];
-    };
+  # fileSystems."/storage" =
+  #   { #truenas smb storage
+  #     device = "//192.168.0.3/storage";
+  #     fsType = "cifs";
+  #     options = let
+  #       automount_opts = "x-systemd.automount,noauto,x-systemd.idle-timeout=60,x-systemd.device-timeout=5s,x-systemd.mount-timeout=5s";
+  #     in ["${automount_opts},mfsymlinks,uid=1000,gid=100,credentials=/home/matthias/smb"];
+  #   };
 
-  fileSystems."/media" =
-    { #truenas smb storage
-      device = "//192.168.0.3/media";
-      fsType = "cifs";
-      options = let
-        automount_opts = "x-systemd.automount,noauto,x-systemd.idle-timeout=60,x-systemd.device-timeout=5s,x-systemd.mount-timeout=5s";
-      in ["${automount_opts},mfsymlinks,uid=1000,gid=100,credentials=/home/matthias/smb"];
-    };
+  # fileSystems."/media" =
+  #   { #truenas smb storage
+  #     device = "//192.168.0.3/media";
+  #     fsType = "cifs";
+  #     options = let
+  #       automount_opts = "x-systemd.automount,noauto,x-systemd.idle-timeout=60,x-systemd.device-timeout=5s,x-systemd.mount-timeout=5s";
+  #     in ["${automount_opts},mfsymlinks,uid=1000,gid=100,credentials=/home/matthias/smb"];
+  #   };
 
-  #swapDevices =
-  #  [
-  #    { #device = "/dev/disk/by-uuid/7d0c3f66-c6eb-413c-956f-dfdd8ceb0cae";
-  #      device = "/dev/disk/by-label/swap";
-  #    }
-  #  ];
+  swapDevices =
+   [
+     { #device = "/dev/disk/by-uuid/7d0c3f66-c6eb-413c-956f-dfdd8ceb0cae";
+       device = "/dev/disk/by-label/swap";
+     }
+   ];
 
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
