@@ -64,10 +64,10 @@
       #plex
       simple-scan
       x11vnc
-      wacomtablet
+      # wacomtablet
     ];
     variables = {
-      LIBVA_DRIVER_NAME = "i965";
+      LIBVA_DRIVER_NAME = "radeonsi";
     };
   };
 
@@ -86,14 +86,14 @@
     };
   };
 
-  nixpkgs.overlays = [                          # This overlay will pull the latest version of Discord
-    (self: super: {
-      discord = super.discord.overrideAttrs (
-        _: { src = builtins.fetchTarball {
-          url = "https://discord.com/api/download?platform=linux&format=tar.gz";
-          sha256 = "1z980p3zmwmy29cdz2v8c36ywrybr7saw8n0w7wlb74m63zb9gpi";
-        };}
-      );
-    })
-  ];
+  # nixpkgs.overlays = [                          # This overlay will pull the latest version of Discord
+  #   (self: super: {
+  #     discord = super.discord.overrideAttrs (
+  #       _: { src = builtins.fetchTarball {
+  #         url = "https://discord.com/api/download?platform=linux&format=tar.gz";
+  #         sha256 = "1z980p3zmwmy29cdz2v8c36ywrybr7saw8n0w7wlb74m63zb9gpi";
+  #       };}
+  #     );
+  #   })
+  # ];
 }
