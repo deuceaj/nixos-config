@@ -58,7 +58,7 @@
       extraPackages = with pkgs; [
        #intel-media-driver
         amdvlk
-        vaapiIntel
+        # vaapiIntel
         vaapiVdpau
         libvdpau-va-gl
       ];
