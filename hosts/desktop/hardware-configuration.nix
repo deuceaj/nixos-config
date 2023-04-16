@@ -19,22 +19,24 @@
       (modulesPath + "/profiles/qemu-guest.nix")
     ];
 
-  boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "nvme" "usb_storage" "usbhid" "uas" "sd_mod" "virtio_pci" "sr_mod" "virtio_blk"];
+   boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usb_storage" "usbhid" "sd_mod" "virtio_pci" "sr_mod" "virtio_blk" ];
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-amd"];
   boot.extraModulePackages = with config.boot.kernelPackages; [ ];
 
   fileSystems."/" =
-    { #device = "/dev/disk/by-uuid/80e0d316-954b-4959-8c5d-06be7255a036";
-      device = "/dev/disk/by-label/nixos";
+    { device = "/dev/disk/by-uuid/dae1369d-8433-4076-a3ad-cdec40ba063a";
       fsType = "ext4";
     };
 
-  fileSystems."/boot" =
-    { #device = "/dev/disk/by-uuid/FCCC-9ECD";
-      device = "/dev/disk/by-label/boot";
+  fileSystems."/boot/efi" =
+    { device = "/dev/disk/by-uuid/C3F6-CD5C";
       fsType = "vfat";
     };
+
+  swapDevices =
+    [ { device = "/dev/disk/by-uuid/50a9be7c-2cc6-4ff2-ac45-b91cdd49104f"; }
+    ];
 
   #fileSystems."/ssd" =
   #  { #device = "/dev/disk/by-uuid/748e6628-0f4e-4479-8940-daa8531d3390";
@@ -96,14 +98,15 @@
   #     in ["${automount_opts},mfsymlinks,uid=1000,gid=100,credentials=/home/matthias/smb"];
   #   };
 
-  swapDevices =
-   [
-     { #device = "/dev/disk/by-uuid/7d0c3f66-c6eb-413c-956f-dfdd8ceb0cae";
-       device = "/dev/disk/by-label/swap";
-     }
-   ];
+  # swapDevices =
+  #  [
+  #    { #device = "/dev/disk/by-uuid/7d0c3f66-c6eb-413c-956f-dfdd8ceb0cae";
+  #      device = "/dev/disk/by-label/swap";
+  #    }
+  #  ];
 
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
+  nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
   networking.useDHCP = lib.mkDefault true;
 

@@ -34,7 +34,7 @@
     loader = {                              # EFI Boot
       efi = {
         canTouchEfiVariables = true;
-        efiSysMountPoint = "/boot";
+        efiSysMountPoint = "/boot/efi";
       };
       grub = {                              # Most of grub is set up for dual boot
         enable = true;
