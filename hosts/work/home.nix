@@ -16,7 +16,7 @@
 {
   imports =
     [
-      ../../modules/desktop/gnome/home.nix  # Window Manager
+      ../../modules/desktop/bspwm/home.nix  # Window Manager
     ];
 
   home = {                                # Specific packages for desktop
@@ -34,12 +34,12 @@
 
   services = {                            # Applets
     blueman-applet.enable = true;         # Bluetooth
-    cbatticon = {
-      enable = true;
-      criticalLevelPercent = 10;
-      commandCriticalLevel = ''notify-send "battery critical!"'';
-      lowLevelPercent = 30;
-      iconType = "standard";
-    };
+    # cbatticon = {
+    #   enable = true;
+    #   criticalLevelPercent = 10;
+    #   commandCriticalLevel = ''notify-send "battery critical!"'';
+    #   lowLevelPercent = 30;
+    #   iconType = "standard";
+    # };
   };
 }

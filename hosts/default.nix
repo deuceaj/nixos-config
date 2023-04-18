@@ -30,8 +30,8 @@ in
       inherit inputs user location hyprland system;
       host = {
         hostName = "desktop";
-        mainMonitor = "HDMI-A-3";
-        secondMonitor = "DP-1";
+        mainMonitor = "HDMI-A-0";
+        secondMonitor = "DVI-D-0 ";
       };
     };                                                      # Pass flake variable
     modules = [                                             # Modules that are used.
@@ -47,8 +47,8 @@ in
           inherit user doom-emacs;
           host = {
             hostName = "desktop";     #For Xorg iGPU  | Videocard 
-            mainMonitor = "HDMI-A-3"; #HDMIA3         | HDMI-A-1
-            secondMonitor = "DP-1";   #DP1            | DisplayPort-1
+            mainMonitor = "HDMI-A-0"; #HDMIA3         | HDMI-A-1
+            secondMonitor = "DVI-D-0 ";   #DP1            | DisplayPort-1
           };
         };                                                  # Pass flake variable
         home-manager.users.${user} = {
@@ -98,8 +98,8 @@ in
       inherit inputs user location;
       host = {
         hostName = "work";
-        mainMonitor = "eDP-1";
-        secondMonitor = "HDMI-A-2";
+        mainMonitor = "HDMI-A-0";
+        secondMonitor = "DVI-D-0 ";
       };
     };
     modules = [
@@ -114,8 +114,8 @@ in
           inherit user;
           host = {
             hostName = "work";
-            mainMonitor = "eDP-1";
-            secondMonitor = "HDMI-A-2";
+            mainMonitor = "HDMI-A-0";
+            secondMonitor = "DVI-D-0 ";
           };
         };
         home-manager.users.${user} = {

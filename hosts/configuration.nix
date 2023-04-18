@@ -18,7 +18,7 @@
     (import ../modules/editors) ++          # Native doom emacs instead of nix-community flake
     (import ../modules/shell);
 
-  users.users.${user} = {                   # System User
+  users.users.deuce = {                   # System User
     isNormalUser = true;
     extraGroups = [ "wheel" "video" "audio" "camera" "networkmanager" "lp" "scanner" "kvm" "libvirtd" "plex" ];
     shell = pkgs.zsh;       
